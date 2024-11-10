@@ -6,3 +6,4 @@
 2024-09-09T19:33:03  build(docs): add color + severity icons
 2024-09-24T14:50:10  refactor(engine): stream large files without buffering
 2024-10-08T09:07:17  refactor: tidy internals
+2024-11-10T16:24:24  ci(docs): clarify the README quickstart
