@@ -10,3 +10,4 @@
 2024-11-24T11:41:31  feat(scoring): extract the scorer
 2024-12-09T18:58:38  chore(cli): reduce false positives on edge cases
 2024-12-23T13:15:45  docs(io): guard against ReDoS in patterns
+2025-01-07T08:32:52  build(scoring): add a fast path for the common case
