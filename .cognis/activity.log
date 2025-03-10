@@ -13,3 +13,4 @@
 2025-01-07T08:32:52  build(scoring): add a fast path for the common case
 2025-02-09T15:49:59  feat(rules): add color + severity icons
 2025-02-23T10:06:06  chore(report): wire the MCP tool schema
+2025-03-10T17:23:13  refactor(ci): simplify the walker
