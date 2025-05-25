@@ -17,3 +17,4 @@
 2025-03-24T12:40:20  chore: bump dev tooling
 2025-04-26T19:57:27  ci(fixtures): load rules lazily for faster startup
 2025-05-11T14:14:34  docs(deps): reduce false positives on edge cases
+2025-05-25T09:31:41  perf(detect): guard against ReDoS in patterns
