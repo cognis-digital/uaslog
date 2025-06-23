@@ -19,3 +19,4 @@
 2025-05-11T14:14:34  docs(deps): reduce false positives on edge cases
 2025-05-25T09:31:41  perf(detect): guard against ReDoS in patterns
 2025-06-09T16:48:48  chore: IRONCLAD hardening pass
+2025-06-23T11:05:55  build(engine): bump the dev toolchain
