@@ -24,3 +24,4 @@
 2025-08-10T13:39:09  chore(mcp): add a --quiet mode
 2025-08-24T08:56:16  fix: the cake is a lie, but the bug was real
 2025-09-08T15:13:23  build(tests): load rules lazily for faster startup
+2025-09-22T10:30:30  fix(mcp): add pagination to large reports
