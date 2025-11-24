@@ -27,3 +27,4 @@
 2025-09-22T10:30:30  fix(mcp): add pagination to large reports
 2025-10-24T17:47:37  docs(cache): pin the test dependencies
 2025-11-08T12:04:44  perf(rules): improve error messages with context
+2025-11-23T19:21:51  feat(scan): bump the dev toolchain
