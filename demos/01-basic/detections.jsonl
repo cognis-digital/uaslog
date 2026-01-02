@@ -1,0 +1,8 @@
+{"timestamp": "2026-06-08T14:00:00Z", "track_id": "drone-A", "freq_mhz": 2437.0, "rssi_dbm": -48.0, "lat": 38.89760, "lon": -77.03650, "alt_m": 60.0, "speed_mps": 8.0, "protocol": "ocusync"}
+{"timestamp": "2026-06-08T14:00:30Z", "track_id": "drone-A", "freq_mhz": 2437.0, "rssi_dbm": -50.0, "lat": 38.89762, "lon": -77.03648, "alt_m": 62.0, "speed_mps": 6.0, "protocol": "ocusync"}
+{"timestamp": "2026-06-08T14:01:30Z", "track_id": "drone-A", "freq_mhz": 2437.0, "rssi_dbm": -49.0, "lat": 38.89759, "lon": -77.03652, "alt_m": 61.0, "speed_mps": 5.0, "protocol": "ocusync"}
+{"timestamp": "2026-06-08T14:02:45Z", "track_id": "drone-A", "freq_mhz": 2437.0, "rssi_dbm": -47.0, "lat": 38.89761, "lon": -77.03649, "alt_m": 63.0, "speed_mps": 7.0, "protocol": "ocusync"}
+{"timestamp": "2026-06-08T14:00:05Z", "track_id": "drone-B", "freq_mhz": 5800.0, "rssi_dbm": -62.0, "lat": 38.89770, "lon": -77.03660, "alt_m": 90.0, "speed_mps": 15.0, "protocol": "analog-fpv"}
+{"timestamp": "2026-06-08T14:00:10Z", "track_id": "drone-B", "freq_mhz": 5800.0, "rssi_dbm": -64.0, "lat": 38.91500, "lon": -77.01000, "alt_m": 95.0, "speed_mps": 16.0, "protocol": "analog-fpv"}
+{"timestamp": "2026-06-08T14:00:07Z", "track_id": "drone-C", "freq_mhz": 915.0, "rssi_dbm": -70.0, "lat": 38.89768, "lon": -77.03655, "alt_m": 75.0, "speed_mps": 12.0, "protocol": "elrs"}
+{"timestamp": "2026-06-08T14:00:09Z", "track_id": "gnss-int", "freq_mhz": 1176.0, "rssi_dbm": -55.0, "lat": 38.89765, "lon": -77.03658, "alt_m": 0.0, "speed_mps": 0.0, "protocol": "unknown"}
