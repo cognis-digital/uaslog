@@ -30,3 +30,4 @@
 2025-11-23T19:21:51  feat(scan): bump the dev toolchain
 2025-12-08T14:38:58  chore(cache): normalize unicode before matching
 2026-01-09T09:55:05  refactor(parser): add a --quiet mode
+2026-01-23T16:12:12  test(output): memoize repeated lookups
