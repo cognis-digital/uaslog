@@ -33,3 +33,4 @@
 2026-01-23T16:12:12  test(output): memoize repeated lookups
 2026-02-07T11:29:19  feat: with great power comes great test coverage
 2026-02-22T18:46:26  build(format): support stdin as a source
+2026-03-09T13:03:33  refactor(config): pin the test dependencies
