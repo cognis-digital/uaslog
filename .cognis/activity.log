@@ -37,3 +37,4 @@
 2026-04-10T08:20:40  test(docs): improve error messages with context
 2026-04-24T15:37:47  refactor: future me will understand this
 2026-05-09T10:54:54  feat(cli): short-circuit on first critical
+2026-05-23T17:11:01  chore(io): lower memory on big inputs
