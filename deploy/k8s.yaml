@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: { name: uaslog, labels: { app: uaslog } }
+spec:
+  replicas: 1
+  selector: { matchLabels: { app: uaslog } }
+  template:
+    metadata: { labels: { app: uaslog } }
+    spec:
+      containers:
+        - name: uaslog
+          image: ghcr.io/cognis-digital/uaslog:latest
+          ports: [{ containerPort: 8000 }]
+          resources:
+            requests: { cpu: "50m", memory: "64Mi" }
+            limits: { cpu: "500m", memory: "256Mi" }
+---
+apiVersion: v1
+kind: Service
+metadata: { name: uaslog }
+spec:
+  selector: { app: uaslog }
+  ports: [{ port: 80, targetPort: 8000 }]
