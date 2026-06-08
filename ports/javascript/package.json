@@ -1,0 +1,10 @@
+{
+  "name": "@cognis/uaslog",
+  "version": "0.2.0",
+  "description": "JavaScript port of uaslog (Cognis Neural Suite)",
+  "bin": {
+    "uaslog": "index.js"
+  },
+  "license": "LicenseRef-COCL-1.0",
+  "type": "module"
+}
