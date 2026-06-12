@@ -27,7 +27,7 @@ import json
 import math
 from dataclasses import dataclass, field, asdict
 from datetime import datetime, timezone
-from typing import Any, Iterable, Optional
+from typing import Any, Optional
 
 # Known RF bands commonly associated with consumer/commercial UAS control,
 # video downlink, and telemetry. Used to classify detected frequencies.

@@ -16,7 +16,7 @@
 </div>
 
 ```bash
-pip install cognis-uaslog
+pip install "git+https://github.com/cognis-digital/uaslog.git"
 uaslog scan .            # → prioritized findings in seconds
 ```
 
@@ -48,7 +48,7 @@ Counter-UAS telemetry/log analyzer that flags drone-detection events, RF bands, 
 ## Quick start
 
 ```bash
-pip install cognis-uaslog
+pip install "git+https://github.com/cognis-digital/uaslog.git"
 uaslog --version
 uaslog scan .                       # scan current project
 uaslog scan . --format json         # machine-readable
