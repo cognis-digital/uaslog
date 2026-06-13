@@ -20,6 +20,12 @@ pip install "git+https://github.com/cognis-digital/uaslog.git"
 uaslog scan .            # → prioritized findings in seconds
 ```
 
+<!-- cognis:layman:start -->
+## What is this?
+
+UASLOG is a command-line tool that reads sensor logs from counter-drone systems and automatically flags suspicious activity — things like drones flying in unauthorized radio frequency bands, tracks that teleport impossibly fast, groups of drones arriving together (swarms), or aircraft that linger in one spot for too long. You point it at a log file and it gives you a prioritized list of alerts in seconds, with no setup or account required. It's designed for security operators and analysts who need a fast, scriptable way to triage raw counter-UAS telemetry without standing up a heavy platform.
+<!-- cognis:layman:end -->
+
 ## Contents
 
 - [Why uaslog?](#why) · [Features](#features) · [Quick start](#quick-start) · [Example](#example) · [Architecture](#architecture) · [AI stack](#ai-stack) · [How it compares](#how-it-compares) · [Integrations](#integrations) · [Install anywhere](#install-anywhere) · [Related](#related) · [Contributing](#contributing)
@@ -45,6 +51,42 @@ Counter-UAS telemetry/log analyzer that flags drone-detection events, RF bands, 
 <div align="right"><a href="#top">↑ back to top</a></div>
 
 <a name="quick-start"></a>
+<!-- cognis:install:start -->
+## Install
+
+`uaslog` is source-available (not published to PyPI) — every method below installs
+straight from GitHub. Pick whichever you prefer; the one-line scripts auto-detect
+the best tool available on your machine.
+
+**One-liner (Linux / macOS):**
+```sh
+curl -fsSL https://raw.githubusercontent.com/cognis-digital/uaslog/HEAD/install.sh | sh
+```
+
+**One-liner (Windows PowerShell):**
+```powershell
+irm https://raw.githubusercontent.com/cognis-digital/uaslog/HEAD/install.ps1 | iex
+```
+
+**Or install manually — any one of:**
+```sh
+pipx install "git+https://github.com/cognis-digital/uaslog.git"     # isolated (recommended)
+uv tool install "git+https://github.com/cognis-digital/uaslog.git"  # uv
+pip install "git+https://github.com/cognis-digital/uaslog.git"      # pip
+```
+
+**From source:**
+```sh
+git clone https://github.com/cognis-digital/uaslog.git
+cd uaslog && pip install .
+```
+
+Then run:
+```sh
+uaslog --help
+```
+<!-- cognis:install:end -->
+
 ## Quick start
 
 ```bash
