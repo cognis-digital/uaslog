@@ -20,6 +20,39 @@ pip install cognis-uaslog
 uaslog scan .            # → prioritized findings in seconds
 ```
 
+## Usage — step by step
+
+1. **Install** (Python 3.9+):
+
+   ```bash
+   pip install uaslog
+   ```
+
+2. **Analyze a C-UAS log** (JSONL or CSV) and print a triage table:
+
+   ```bash
+   uaslog analyze sensor_log.jsonl
+   ```
+
+3. **Set the severity floor.** Only show (and treat as failing) findings at or above a level:
+
+   ```bash
+   uaslog analyze sensor_log.jsonl --min-severity high
+   ```
+
+4. **Read the output as JSON**, or stream from stdin:
+
+   ```bash
+   cat sensor_log.jsonl | uaslog analyze - --format json | jq .severity_counts
+   ```
+
+5. **Gate in CI/alerting.** Exit `0` means no findings at/above the floor; non-zero means actionable findings (use it in a cron alert):
+
+   ```bash
+   uaslog analyze sensor_log.jsonl --min-severity medium || echo "C-UAS findings detected"
+   ```
+
+
 ## Contents
 
 - [Why uaslog?](#why) · [Features](#features) · [Quick start](#quick-start) · [Example](#example) · [Architecture](#architecture) · [AI stack](#ai-stack) · [How it compares](#how-it-compares) · [Integrations](#integrations) · [Install anywhere](#install-anywhere) · [Related](#related) · [Contributing](#contributing)
