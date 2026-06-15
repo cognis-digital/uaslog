@@ -23,9 +23,15 @@ from .core import ParseError, SEVERITY_ORDER, analyze, parse_log
 
 def _read_input(path: str) -> str:
     if path == "-":
-        return sys.stdin.read()
+        try:
+            return sys.stdin.read()
+        except UnicodeDecodeError as exc:
+            raise OSError(f"stdin contains non-UTF-8 data: {exc}") from exc
     with open(path, "r", encoding="utf-8") as fh:
-        return fh.read()
+        try:
+            return fh.read()
+        except UnicodeDecodeError as exc:
+            raise OSError(f"file is not valid UTF-8 (binary?): {exc}") from exc
 
 
 def _render_table(result, min_rank: int) -> str:

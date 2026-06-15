@@ -172,5 +172,99 @@ class TestCli(unittest.TestCase):
         self.assertIn("uaslog", proc.stdout)
 
 
+class TestHardeningEdgeCases(unittest.TestCase):
+    """Tests added during production hardening — cover error/edge paths."""
+
+    # ------------------------------------------------------------------
+    # Input validation: bad lat/lon/freq are silently coerced to None
+    # ------------------------------------------------------------------
+
+    def test_out_of_range_lat_becomes_none(self):
+        """Latitude outside ±90 should be treated as missing."""
+        text = '{"track_id": "t1", "lat": 999.0, "lon": 10.0}\n'
+        events = parse_log(text)
+        self.assertIsNone(events[0].lat)
+
+    def test_out_of_range_lon_becomes_none(self):
+        """Longitude outside ±180 should be treated as missing."""
+        text = '{"track_id": "t1", "lat": 10.0, "lon": -999.0}\n'
+        events = parse_log(text)
+        self.assertIsNone(events[0].lon)
+
+    def test_negative_freq_becomes_none(self):
+        """Negative frequency is physically impossible; should be dropped."""
+        text = '{"track_id": "t1", "freq_mhz": -100.0}\n'
+        events = parse_log(text)
+        self.assertIsNone(events[0].freq_mhz)
+
+    def test_zero_freq_becomes_none(self):
+        """Zero frequency is meaningless; should be dropped."""
+        text = '{"track_id": "t1", "freq_mhz": 0.0}\n'
+        events = parse_log(text)
+        self.assertIsNone(events[0].freq_mhz)
+
+    # ------------------------------------------------------------------
+    # haversine: floating-point edge case — identical positions
+    # ------------------------------------------------------------------
+
+    def test_haversine_identical_points_no_exception(self):
+        """Same lat/lon pair should return 0 without raising."""
+        from uaslog.core import _haversine_m
+        self.assertAlmostEqual(_haversine_m(45.0, 90.0, 45.0, 90.0), 0.0)
+
+    # ------------------------------------------------------------------
+    # analyze: empty event list is valid (no findings, zero stats)
+    # ------------------------------------------------------------------
+
+    def test_analyze_empty_events(self):
+        """analyze([]) must succeed and return zero-count stats."""
+        from uaslog.core import analyze
+        result = analyze([])
+        self.assertEqual(result.stats["event_count"], 0)
+        self.assertEqual(result.stats["finding_count"], 0)
+        self.assertEqual(result.findings, [])
+        self.assertEqual(result.max_severity, "info")
+
+    # ------------------------------------------------------------------
+    # CLI: binary / non-UTF-8 file returns exit code 2
+    # ------------------------------------------------------------------
+
+    def test_binary_file_returns_2(self):
+        """A binary file that cannot be decoded as UTF-8 should exit 2."""
+        import tempfile
+        with tempfile.NamedTemporaryFile(
+            "wb", suffix=".bin", delete=False
+        ) as tf:
+            tf.write(bytes(range(256)))  # guaranteed non-UTF-8 bytes
+            path = tf.name
+        try:
+            rc = main(["analyze", path])
+            self.assertEqual(rc, 2)
+        finally:
+            os.unlink(path)
+
+    # ------------------------------------------------------------------
+    # mcp_server: module imports cleanly (no broken scan/to_json refs)
+    # ------------------------------------------------------------------
+
+    def test_mcp_server_imports(self):
+        """mcp_server must be importable without raising ImportError."""
+        import importlib
+        try:
+            mod = importlib.import_module("uaslog.mcp_server")
+        except ImportError as exc:
+            self.fail(f"mcp_server import raised ImportError: {exc}")
+        self.assertTrue(callable(mod.serve))
+
+    # ------------------------------------------------------------------
+    # CSV: header-only file (no data rows) raises ParseError
+    # ------------------------------------------------------------------
+
+    def test_csv_header_only_raises(self):
+        """CSV with only a header row and no data should raise ParseError."""
+        with self.assertRaises(ParseError):
+            parse_log("timestamp,track_id,freq_mhz\n")
+
+
 if __name__ == "__main__":
     unittest.main()

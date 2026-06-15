@@ -144,16 +144,31 @@ def _to_float(value: Any) -> Optional[float]:
         return None
 
 
+def _valid_lat(v: Optional[float]) -> Optional[float]:
+    """Return v if it is a valid WGS84 latitude, else None."""
+    return v if (v is not None and -90.0 <= v <= 90.0) else None
+
+
+def _valid_lon(v: Optional[float]) -> Optional[float]:
+    """Return v if it is a valid WGS84 longitude, else None."""
+    return v if (v is not None and -180.0 <= v <= 180.0) else None
+
+
+def _valid_freq(v: Optional[float]) -> Optional[float]:
+    """Return v if it is a plausible RF frequency (> 0 MHz), else None."""
+    return v if (v is not None and v > 0.0) else None
+
+
 def _record_to_event(seq: int, rec: dict[str, Any]) -> DetectionEvent:
     tid = rec.get("track_id", rec.get("id"))
     return DetectionEvent(
         seq=seq,
         timestamp=_parse_timestamp(rec.get("timestamp", rec.get("ts"))),
         track_id=None if tid is None or tid == "" else str(tid),
-        freq_mhz=_to_float(rec.get("freq_mhz", rec.get("freq"))),
+        freq_mhz=_valid_freq(_to_float(rec.get("freq_mhz", rec.get("freq")))),
         rssi_dbm=_to_float(rec.get("rssi_dbm", rec.get("rssi"))),
-        lat=_to_float(rec.get("lat")),
-        lon=_to_float(rec.get("lon")),
+        lat=_valid_lat(_to_float(rec.get("lat"))),
+        lon=_valid_lon(_to_float(rec.get("lon"))),
         alt_m=_to_float(rec.get("alt_m", rec.get("alt"))),
         speed_mps=_to_float(rec.get("speed_mps", rec.get("speed"))),
         protocol=(str(rec["protocol"]) if rec.get("protocol") not in (None, "") else None),
@@ -225,6 +240,9 @@ def _haversine_m(lat1: float, lon1: float, lat2: float, lon2: float) -> float:
     dphi = math.radians(lat2 - lat1)
     dl = math.radians(lon2 - lon1)
     a = math.sin(dphi / 2) ** 2 + math.cos(p1) * math.cos(p2) * math.sin(dl / 2) ** 2
+    # Clamp to [0, 1] to absorb floating-point rounding that can push a
+    # just outside [0, 1], which would cause math.asin / math.sqrt to raise.
+    a = max(0.0, min(1.0, a))
     return 2 * r * math.asin(math.sqrt(a))
 
 
@@ -298,7 +316,6 @@ def analyze(events: list[DetectionEvent]) -> AnalysisResult:
                 )
 
         # ---- Rule 3: teleport / track-stitch anomaly + climb rate ----
-        loiter_anchor: Optional[DetectionEvent] = None
         for prev, cur in zip(evs_sorted, evs_sorted[1:]):
             if None in (prev.lat, prev.lon, cur.lat, cur.lon):
                 continue

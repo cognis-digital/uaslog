@@ -1,6 +1,10 @@
-"""UASLOG MCP server — exposes scan() as an MCP tool for Cognis.Studio."""
+"""UASLOG MCP server — exposes analyze_log() as an MCP tool for Cognis.Studio."""
 from __future__ import annotations
-from uaslog.core import scan, to_json
+
+import json
+
+from uaslog.core import ParseError, analyze, parse_log
+
 
 def serve() -> int:
     """Start an MCP stdio server. Requires the optional 'mcp' extra:
@@ -14,9 +18,18 @@ def serve() -> int:
     app = FastMCP("uaslog")
 
     @app.tool()
-    def uaslog_scan(target: str) -> str:
-        """Counter-UAS telemetry/log analyzer that flags drone-detection events, RF bands, and track anomalies.. Returns JSON findings."""
-        return to_json(scan(target))
+    def uaslog_scan(log_text: str) -> str:
+        """Analyze a C-UAS log (JSONL or CSV text).
+
+        Returns JSON findings with severity, codes, and event references.
+        Raises ValueError on unparseable input.
+        """
+        try:
+            events = parse_log(log_text)
+        except ParseError as exc:
+            raise ValueError(str(exc)) from exc
+        result = analyze(events)
+        return json.dumps(result.to_dict(), indent=2, sort_keys=True)
 
     app.run()
     return 0
