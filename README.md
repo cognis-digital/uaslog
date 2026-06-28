@@ -20,6 +20,36 @@ pip install cognis-uaslog
 uaslog scan .            # → prioritized findings in seconds
 ```
 
+
+<!-- cognis:example:start -->
+## 🔎 Example output
+
+Real, reproducible output from the tool — runs offline:
+
+```console
+$ uaslog-emit --version
+uaslog 0.1.0
+```
+
+```console
+$ uaslog-emit --help
+usage: uaslog [-h] [--version] {analyze} ...
+
+Counter-UAS telemetry/log analyzer (defensive triage only).
+
+positional arguments:
+  {analyze}
+    analyze   Analyze a C-UAS log file (JSONL/CSV).
+
+options:
+  -h, --help  show this help message and exit
+  --version   show program's version number and exit
+```
+
+> Blocks above are real `uaslog` output — reproduce them from a clone.
+
+<!-- cognis:example:end -->
+
 ## Usage — step by step
 
 1. **Install** (Python 3.9+):

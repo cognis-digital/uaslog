@@ -1,0 +1,13 @@
+$ uaslog-emit --help
+
+usage: uaslog [-h] [--version] {analyze} ...
+
+Counter-UAS telemetry/log analyzer (defensive triage only).
+
+positional arguments:
+  {analyze}
+    analyze   Analyze a C-UAS log file (JSONL/CSV).
+
+options:
+  -h, --help  show this help message and exit
+  --version   show program's version number and exit

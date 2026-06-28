@@ -1,0 +1,3 @@
+$ uaslog-emit --version
+
+uaslog 0.1.0
